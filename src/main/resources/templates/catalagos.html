@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Catálogo de Jogos</title>
+</head>
+<body>
+    <h1>Catálogo de Jogos</h1>
+    <section>
+        <h2>Cadastra jogo</h2>
+        <form th:action="@{/catalagos}"
+              th:object="${novoCatalago}"
+              method="post">
+            <div>
+                <label for="titulo">Título:</label>
+                <input id="titulo"
+                       type="text"
+                       th:field="*{titulo}"
+                       required>
+            </div>
+            <div>
+                <label for="plataforma">Plataforma:</label>
+                <input id="plataforma"
+                       type="text"
+                       th:field="*{plataforma}">
+            </div>
+            <div>
+                <label for="ano_lancamento">Ano de lançamento:</label>
+                <input id="ano_lancamento"
+                       type="text"
+                       th:field="*{ano_lancamento}">
+            </div>
+            <div>
+                <label for="nota">Nota:</label>
+                <input id="nota"
+                       type="number"
+                       min="0"
+                       max="10"
+                       th:field="*{nota}">
+            </div>
+            <div>
+                <label for="status">Status:</label>
+                <select id="status" th:field="*{status}">
+                    <option value="">Selecione</option>
+                    <option value="QUERO JOGAR">Quero jogar</option>
+                    <option value="JOGANDO">Jogando</option>
+                    <option value="ZERADO">Zerado</option>
+                </select>
+            </div>
+            <div>
+                <label for="conteudo">Descrição:</label>
+                <textarea id="conteudo"
+                          th:field="*{conteudo}"
+                          rows="4"></textarea>
+            </div>
+            <button type="submit">Salvar jogo</button>
+        </form>
+    </section>
+    <section>
+        <h2>Pesquisar jogo</h2>
+        <form method="get"
+              action="/catalagos/pesquisatitulo">
+            <input type="text"
+                   name="titulo"
+                   placeholder="Digite o título">
+            <button type="submit">Pesquisar</button>
+        </form>
+    </section>
+    <section>
+        <h2>Jogos cadastrados</h2>
+        <div th:if="${#lists.isEmpty(catalagos)}">
+            <p>Nenhum jogo cadastrado.</p>
+        </div>
+        <div th:each="catalago : ${catalagos}">
+            <h3 th:text="${catalago.titulo}">
+                Título do jogo
+            </h3>
+            <p>
+                <strong>Plataforma:</strong>
+                <span th:text="${catalago.plataforma}"></span>
+            </p>
+            <p>
+                <strong>Ano:</strong>
+                <span th:text="${catalago.ano_lancamento}"></span>
+            </p>
+            <p>
+                <strong>Nota:</strong>
+                <span th:text="${catalago.nota}"></span>
+            </p>
+            <p>
+                <strong>Status:</strong>
+                <span th:text="${catalago.status}"></span>
+            </p>
+            <p>
+                <strong>Descrição:</strong>
+                <span th:text="${catalago.conteudo}"></span>
+            </p>
+            <a th:href="@{/catalagos/deletar/{id}(id=${catalago.id})}">
+                Excluir
+            </a>
+            <hr>
+        </div>
+    </section>
+</body>
+</html>
