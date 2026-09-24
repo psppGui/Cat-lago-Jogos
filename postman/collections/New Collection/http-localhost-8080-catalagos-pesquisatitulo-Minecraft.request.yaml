@@ -1,9 +1,0 @@
-$kind: http-request
-name: http://localhost:8080/catalagos/pesquisatitulo/Minecraft
-description: ""
-url: http://localhost:8080/catalagos/pesquisatitulo/Minecraft
-method: GET
-body:
-  type: json
-  content: ""
-order: 1790280348898
